@@ -95,12 +95,9 @@ sympy==1.7.1
 terminado==0.9.2
 testpath==0.4.4
 threadpoolctl==2.1.0
-tifffile==2021.2.26
 toml==0.10.2
 tornado==6.1
 traitlets==5.0.5
 urllib3==1.26.3
-wcwidth==0.2.5
 webencodings==0.5.1
 whitenoise==5.2.0
-widgetsnbextension==3.5.1
