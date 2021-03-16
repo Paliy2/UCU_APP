@@ -75,7 +75,6 @@ prometheus-client==0.9.0
 prompt-toolkit==3.0.16
 psycopg2==2.8.6
 py==1.10.0
-py2exe==0.10.2.1
 pycparser==2.20
 Pygments==2.8.0
 PyJWT==1.7.1
@@ -83,7 +82,6 @@ pynput==1.7.3
 pyparsing==2.4.7
 pypiwin32==223
 pyrsistent==0.17.3
-pyscreenshot==2.3
 pytest==6.2.1
 python-dateutil==2.8.1
 pytz==2020.5
@@ -92,11 +90,7 @@ pywin32==300
 pywinpty==0.5.7
 pyzmq==22.0.3
 qtconsole==5.0.2
-QtPy==1.9.0
 requests==2.25.1
-scikit-image==0.18.1
-scikit-learn==0.24.1
-scipy==1.6.1
 Send2Trash==1.5.0
 six==1.15.0
 sqlparse==0.4.1
@@ -107,7 +101,6 @@ threadpoolctl==2.1.0
 tifffile==2021.2.26
 toml==0.10.2
 tornado==6.1
-tqdm==4.54.1
 traitlets==5.0.5
 urllib3==1.26.3
 wcwidth==0.2.5
