@@ -66,10 +66,7 @@ packaging==20.8
 pandocfilters==1.4.3
 parso==0.8.1
 pefile==2019.4.18
-pgeocode==0.3.0
 pickleshare==0.7.5
-Pillow==8.0.1
-pixelate==0.4
 pluggy==0.13.1
 prometheus-client==0.9.0
 prompt-toolkit==3.0.16
@@ -80,12 +77,10 @@ Pygments==2.8.0
 PyJWT==1.7.1
 pynput==1.7.3
 pyparsing==2.4.7
-pypiwin32==223
 pyrsistent==0.17.3
 pytest==6.2.1
 python-dateutil==2.8.1
 pytz==2020.5
-pywinpty==0.5.7
 pyzmq==22.0.3
 requests==2.25.1
 Send2Trash==1.5.0
