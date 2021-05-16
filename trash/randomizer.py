@@ -9,6 +9,10 @@ import random
 import names
 import string
 from user.serializers import UserRegistrationSerializer
+from organizations.serializers import OrganizationSerializer
+from organizations.models import Organization
+import pandas as pd
+
 
 
 class RandomUserAccountGenerator:
@@ -56,13 +60,31 @@ class RandomUserAccountGenerator:
             'profile': profile,
         }
 
+def create_student_organizations(path="staticfiles/SO_UCU2.csv"):
+    df = pd.read_csv(path, encoding="windows-1251", sep=';')
+    for index, row in df.iterrows():
+        res = {
+            "organization_name": df["Organization"][index],
+            "head": df["Head"][index],
+            "secretary": df["Secretary"][index],
+            "financier":df["Financier"][index],
+            "members":df["MembersNames"][index],
+            "media":df["MediaLinks"][index],
+            "status":df["Status"][index],
+        }
+        # todo save res in DB
+        try:
+            OrganizationSerializer().create(validated_data=res)
+        except:
+            print(res)
+
 if __name__ == '__main__':
-    USERS_TO_CREATE = 100
-
-    user_manager = UserRegistrationSerializer()
-    generator = RandomUserAccountGenerator()
-    for i in range(USERS_TO_CREATE):
-        data = generator.get_new_json()
-        user_manager.create(data)
-    print("Finished")
-
+    # USERS_TO_CREATE = 100
+    #
+    # user_manager = UserRegistrationSerializer()
+    # generator = RandomUserAccountGenerator()
+    # for i in range(USERS_TO_CREATE):
+    #     data = generator.get_new_json()
+    #     user_manager.create(data)
+    # print("Finished")
+    create_student_organizations()
