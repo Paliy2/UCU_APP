@@ -5,7 +5,7 @@ from django.db import models
 
 
 class Organization(models.Model):
-    id = models.IntegerField(primary_key=True, db_index=True, unique=True, editable=False)
+    id = models.AutoField(primary_key=True, db_index=True, unique=True, editable=False)
     organization_name = models.CharField(max_length=100, blank=False, unique=True)
     head = models.CharField(max_length=1000, blank=False)
     secretary = models.CharField(max_length=1000, blank=False)

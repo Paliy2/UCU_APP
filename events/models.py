@@ -19,7 +19,7 @@ class Event(models.Model):
                         (4, "Khutorivka"),
                         )
 
-    id = models.BigAutoField(primary_key=True, db_index=True, unique=True, editable=False)
+    id = models.AutoField(primary_key=True, db_index=True, unique=True, editable=False)
     picture_url = models.URLField()
     name = models.CharField(max_length=100, blank=False)
     description = models.TextField()
