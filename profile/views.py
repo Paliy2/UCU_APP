@@ -5,9 +5,37 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from user.serializers import UserRegistrationSerializer
-from profile.models import UserProfile
+from profile.models import UserProfile, PhoneNumber
+from profile.serializers import PhoneNumberSerializer
 from rest_framework import filters
 from user.serializers import UserSerializer
+
+
+class PhoneNumberListView(ListAPIView):
+    model = PhoneNumber
+    paginate_by = 10
+    paginate_by_param = 'page_size'
+    max_paginate_by = 100
+    serializer_class = PhoneNumberSerializer
+    permission_classes = (AllowAny,)
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ['lastnameukr', 'firstnameukr', 'lastnameeng', 'firstnameeng', ]
+
+    def get_queryset(self, **kwargs):
+        return PhoneNumber.objects.all()
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        response = {
+            'success': 'True',
+            'status code': status.HTTP_200_OK,
+            'message': 'Event POST success',
+        }
+        status_code = status.HTTP_200_OK
+
+        return Response(response, status=status_code)
 
 
 class ContactListView(ListAPIView):
@@ -16,8 +44,8 @@ class ContactListView(ListAPIView):
 
     queryset = UserProfile.objects.all()
     serializer_class = UserSerializer
-    filter_backends = (filters.SearchFilter,)
-    search_fields = ['last_name', 'first_name', ]
+    # filter_backends = (filters.SearchFilter,)
+    # search_fields = ['lastnameukr', 'firstnameukr', 'lastnameeng', 'firstnameeng',]
 
 
 class UserProfileView(RetrieveAPIView):
@@ -32,13 +60,7 @@ class UserProfileView(RetrieveAPIView):
                 'success': 'true',
                 'status code': status_code,
                 'message': 'User profile fetched successfully',
-                'data': [{
-                    'first_name': user_profile.first_name,
-                    'last_name': user_profile.last_name,
-                    'phone_number': user_profile.phone_number,
-                    'age': user_profile.age,
-                    'gender': user_profile.gender,
-                }]
+                'data': []
             }
 
         except Exception as e:

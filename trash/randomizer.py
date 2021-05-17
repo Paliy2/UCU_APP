@@ -11,6 +11,7 @@ import string
 from user.serializers import UserRegistrationSerializer
 from organizations.serializers import OrganizationSerializer
 from organizations.models import Organization
+from profile.serializers import PhoneNumberSerializer
 import pandas as pd
 
 
@@ -78,6 +79,26 @@ def create_student_organizations(path="staticfiles/SO_UCU2.csv"):
         except:
             print(res)
 
+
+def create_contacts(path="../staticfiles/contacts.csv"):
+    df = pd.read_csv(path, encoding="utf-8", sep=',')
+    for index, row in df.iterrows():
+        res = {
+            "emailucu": df["emailucu"][index],
+            "lastnameukr": df["lastnameukr"][index],
+            "firstnameukr": df["firstnameukr"][index],
+            "lastnameeng":df["lastnameeng"][index],
+            "firstnameeng":df["firstnameeng"][index],
+            "phone":df["phone"][index],
+            "department":df["department"][index],
+        }
+        # print(res)
+        # todo save res in DB
+        try:
+            PhoneNumberSerializer().create(validated_data=res)
+        except:
+            print(res)
+
 if __name__ == '__main__':
     # USERS_TO_CREATE = 100
     #
@@ -87,4 +108,5 @@ if __name__ == '__main__':
     #     data = generator.get_new_json()
     #     user_manager.create(data)
     # print("Finished")
-    create_student_organizations()
+    create_contacts()
+    # create_student_organizations()

@@ -6,7 +6,7 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 
 # If modifying these scopes, delete the file token.json.
-SCOPES = ['https://www.googleapis.com/auth/contacts.readonly']
+SCOPES = ['https://www.googleapis.com/auth/contacts.readonly', "https://www.googleapis.com/auth/directory.readonly"]
 
 def main():
     """Shows basic usage of the People API.
@@ -33,27 +33,28 @@ def main():
     service = build('people', 'v1', credentials=creds)
 
     # Call the People API
-    # print('List 10 connection names')
-    # results = service.people().connections().list(
-    #     resourceName='people/me',
-    #     pageSize=10,
-    #     personFields='names,emailAddresses').execute()
-    # connections = results.get('connections', [])
-    import html
+    results = service.people().listDirectoryPeople(
+        # resourceName='people/me',
+        readMask='names,emailAddresses,phoneNumbers,organizations',
+        # sources='DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE',
+        sources='DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE',
+        pageSize=200,
+        # personFields='names'
+    ).execute()
+    connections = results.get('connections', [])
 
     # a=  service.people().get(resourceName="people/me", requestMask_includeField="." )
-    a=  service.people().searchContacts(pageSize=10, query="A", readMask="names,emailAddresses")
-    print(a.headers)
-    print(dir(a))
-    print(a.body)
-    print(a.execute)
+    # a=  service.people().searchContacts(pageSize=5000, query="A", readMask="names,emailAddresses")
+    # print(a.headers)
+    # print(dir(a))
+    # print(a.body)
+    # print(a.execute)
 
-    # service.people().get()
-    # for person in connections:
-    #     names = person.get('names', [])
-    #     if names:
-    #         name = names[0].get('displayName')
-    #         print(name)
+    for person in connections:
+        names = person.get('names', [])
+        if names:
+            name = names[0].get('displayName')
+            print(name)
 
 if __name__ == '__main__':
     main()
