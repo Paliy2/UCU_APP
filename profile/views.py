@@ -12,10 +12,9 @@ from user.serializers import UserSerializer
 
 
 class PhoneNumberListView(ListAPIView):
+    paginate_by = 3
     model = PhoneNumber
-    paginate_by = 10
-    paginate_by_param = 'page_size'
-    max_paginate_by = 100
+
     serializer_class = PhoneNumberSerializer
     permission_classes = (AllowAny,)
     filter_backends = (filters.SearchFilter,)
