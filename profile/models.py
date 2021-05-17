@@ -17,9 +17,6 @@ class PhoneNumber(models.Model):
     phone = models.CharField(max_length=1000, unique=False)
     department = models.CharField(max_length=1000, unique=False)
 
-    class Meta:
-        db_table = "contacts"
-
 class UserProfile(models.Model):
 
     id = models.AutoField(primary_key=True, db_index=True, unique=True, editable=False)
