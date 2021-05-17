@@ -9,7 +9,8 @@ from user.models import User
 class PhoneNumber(models.Model):
 
     # id = models.AutoField(primary_key=True, db_index=True, unique=True, editable=False)
-    emailucu = models.EmailField()
+    emailucu = models.CharField(max_length=1000, unique=False)
+    # emailucu = models.EmailField()
     lastnameukr = models.CharField(max_length=1000, unique=False)
     firstnameukr = models.CharField(max_length=1000, unique=False)
     lastnameeng = models.CharField(max_length=1000, unique=False)
