@@ -8,7 +8,7 @@ from user.models import User
 
 class PhoneNumber(models.Model):
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.AutoField(primary_key=True, db_index=True, unique=True, editable=False)
     emailucu = models.EmailField()
     lastnameukr = models.CharField(max_length=1000, unique=False)
     firstnameukr = models.CharField(max_length=1000, unique=False)
@@ -22,7 +22,7 @@ class PhoneNumber(models.Model):
 
 class UserProfile(models.Model):
 
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    id = models.AutoField(primary_key=True, db_index=True, unique=True, editable=False)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
     first_name = models.CharField(max_length=50, unique=False)
     last_name = models.CharField(max_length=50, unique=False)
