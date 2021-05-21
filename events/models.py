@@ -27,7 +27,8 @@ class Event(models.Model):
                         ('h', "Khutorivka"),
                         )
 
-    # id = models.AutoField(primary_key=True, db_index=True, unique=True, editable=False)
+    id = models.AutoField(primary_key=True, unique=True, editable=False, null=True)
+    # id = models.AutoField(null=True)
     status = models.CharField(max_length=1, default='d', choices=STATUS_CHOICES)
 
     picture_url = models.URLField()
