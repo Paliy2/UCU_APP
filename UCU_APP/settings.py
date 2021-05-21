@@ -15,7 +15,7 @@ SECRET_KEY = 'wo988%&jz9prn1)0_!df5@qv(vrovf$owluz_ic2q2rpwgj))y'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['ancient-eyrie-54870', 'localhost']
+ALLOWED_HOSTS = ['ancient-eyrie-54870', 'localhost', "floating-reef-52720", "floating-reef-52720.herokuapp.com"]
 
 
 # Application definition
