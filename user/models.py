@@ -64,10 +64,10 @@ class User(AbstractBaseUser):
         return self.email
 
     def has_module_perms(self, app_label):
-        return self.is_superuser
+        return True #self.is_superuser
 
     def has_perm(self, perm, obj=None):
-        return self.is_superuser
+        return True #self.is_superuser
 
     class Meta:
         '''
