@@ -26,8 +26,8 @@ class Event(models.Model):
                         ('h', "Khutorivka"),
                         )
 
-    id = models.AutoField(primary_key=True, unique=True, default=1000)
-    # id = models.BigIntegerField(primary_key=True, unique=True)
+    # id = models.AutoField(primary_key=True, unique=True, default=1000)
+    id = models.BigIntegerField(primary_key=True, unique=True)
     # id = models.AutoField(null=True)
     status = models.CharField(max_length=1, default='d', choices=STATUS_CHOICES)
 
