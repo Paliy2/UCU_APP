@@ -33,25 +33,25 @@ def main():
     service = build('people', 'v1', credentials=creds)
 
     # Call the People API
-    results = service.people().listDirectoryPeople(
-        # resourceName='people/me',
-        readMask='names,emailAddresses,phoneNumbers,organizations',
-        # sources='DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE',
-        sources='DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE',
-        pageSize=200,
-        # personFields='names'
-    ).execute()
-    connections = results.get('connections', [])
+    # results = service.people().listDirectoryPeople(
+    #     # resourceName='people/me',
+    #     readMask='names,emailAddresses,phoneNumbers,organizations',
+    #     # sources='DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE',
+    #     sources='DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE',
+    #     pageSize=200,
+    #     # personFields='names'
+    # ).execute()
+    # connections = results.get('connections', [])
 
-    # a=  service.people().get(resourceName="people/me", requestMask_includeField="." )
-    # a=  service.people().searchContacts(pageSize=5000, query="A", readMask="names,emailAddresses")
+    a=  service.people().get(resourceName="people/me", requestMask_includeField="." )
+    a=  service.people().searchContacts(pageSize=10, query="Савчук", readMask="names,emailAddresses").execute()
     # print(a.headers)
     # print(dir(a))
-    # print(a.body)
+    # print(a)
     # print(a.execute)
 
-    for person in connections:
-        names = person.get('names', [])
+    for person in a.get("results"):
+        names = person.get("person").get('names', [])
         if names:
             name = names[0].get('displayName')
             print(name)

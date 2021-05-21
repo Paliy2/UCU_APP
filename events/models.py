@@ -6,20 +6,30 @@ from django.db import models
 from user.models import User
 
 
+
 class Event(models.Model):
     # todo get the list of categories for events
+    STATUS_CHOICES = [
+        ('d', 'Draft'),
+        ('r', 'To be reviewd'),
+        ('p', 'Published'),
+        ('w', 'Withdrawn'),
+    ]
+
     categories = ((1, "Sociology"),
                   (2, "Programming"),
                   (3, "Lifeworks"),
                   )
 
-    location_choices = ((1, "Sheptytsky Center"),
-                        (2, "Kozelnytska 2a"),
-                        (3, "Sventsitskoho 17"),
-                        (4, "Khutorivka"),
+    location_choices = (('c', "Sheptytsky Center"),
+                        ('k', "Kozelnytska 2a"),
+                        ('s', "Sventsitskoho 17"),
+                        ('h', "Khutorivka"),
                         )
 
     id = models.AutoField(primary_key=True, db_index=True, unique=True, editable=False)
+    status = models.CharField(max_length=1, default='d', choices=STATUS_CHOICES)
+
     picture_url = models.URLField()
     name = models.CharField(max_length=100, blank=False)
     description = models.TextField()
@@ -39,6 +49,7 @@ class Event(models.Model):
         to set table name in database
         '''
         db_table = "events"
+
 
 class EventFavorites(models.Model):
     event_id = models.ForeignKey(Event, verbose_name="Event id", on_delete=models.CASCADE)
