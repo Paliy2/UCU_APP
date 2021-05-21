@@ -6,7 +6,6 @@ from django.db import models
 from user.models import User
 
 
-
 class Event(models.Model):
     # todo get the list of categories for events
     STATUS_CHOICES = [
@@ -27,7 +26,8 @@ class Event(models.Model):
                         ('h', "Khutorivka"),
                         )
 
-    id = models.AutoField(primary_key=True)
+    id = models.AutoField(primary_key=True, unique=True, default=1000)
+    # id = models.BigIntegerField(primary_key=True, unique=True)
     # id = models.AutoField(null=True)
     status = models.CharField(max_length=1, default='d', choices=STATUS_CHOICES)
 
