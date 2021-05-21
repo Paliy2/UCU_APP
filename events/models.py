@@ -27,7 +27,7 @@ class Event(models.Model):
                         )
 
     # id = models.AutoField(primary_key=True, unique=True, default=1000)
-    id = models.BigIntegerField(primary_key=True, unique=True)
+    id = models.CharField(primary_key=True, default=uuid.uuid4, editable=False, max_length=36)
     # id = models.AutoField(null=True)
     status = models.CharField(max_length=1, default='d', choices=STATUS_CHOICES)
 
