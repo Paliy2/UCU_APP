@@ -17,6 +17,7 @@ pandocfilters==1.4.3
 pyyaml
 uritemplate
 gears
+Pillow
 py==1.10.0
 requests==2.25.1
 six==1.15.0
