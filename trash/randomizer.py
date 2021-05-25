@@ -3,17 +3,17 @@ import sys, os
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'UCU_APP.settings')
 
 import django
+
 django.setup()
 
 import random
 import names
 import string
 from user.serializers import UserRegistrationSerializer
-from organizations.serializers import OrganizationSerializer
-from organizations.models import Organization
+from organizations.serializers import OrganizationSerializer, DepartmentSerializer
+from organizations.models import Organization, Department
 from profile.serializers import PhoneNumberSerializer
 import pandas as pd
-
 
 
 class RandomUserAccountGenerator:
@@ -37,7 +37,7 @@ class RandomUserAccountGenerator:
 
     @staticmethod
     def get_random_phone():
-        return random.randint(10**10, 10**11)
+        return random.randint(10 ** 10, 10 ** 11)
 
     @staticmethod
     def get_random_char(y):
@@ -61,17 +61,18 @@ class RandomUserAccountGenerator:
             'profile': profile,
         }
 
-def create_student_organizations(path="staticfiles/SO_UCU2.csv"):
+
+def create_student_organizations(path="../staticfiles/SO_UCU2.csv"):
     df = pd.read_csv(path, encoding="windows-1251", sep=';')
     for index, row in df.iterrows():
         res = {
             "organization_name": df["Organization"][index],
             "head": df["Head"][index],
             "secretary": df["Secretary"][index],
-            "financier":df["Financier"][index],
-            "members":df["MembersNames"][index],
-            "media":df["MediaLinks"][index],
-            "status":df["Status"][index],
+            "financier": df["Financier"][index],
+            "members": df["MembersNames"][index],
+            "media": df["MediaLinks"][index],
+            "status": df["Status"][index],
         }
         # todo save res in DB
         try:
@@ -87,10 +88,10 @@ def create_contacts(path="../staticfiles/contacts.csv"):
             "emailucu": df["emailucu"][index],
             "lastnameukr": df["lastnameukr"][index],
             "firstnameukr": df["firstnameukr"][index],
-            "lastnameeng":df["lastnameeng"][index],
-            "firstnameeng":df["firstnameeng"][index],
-            "phone":df["phone"][index],
-            "department":df["department"][index],
+            "lastnameeng": df["lastnameeng"][index],
+            "firstnameeng": df["firstnameeng"][index],
+            "phone": df["phone"][index],
+            "department": df["department"][index],
         }
         # print(res)
         # todo save res in DB
@@ -98,6 +99,22 @@ def create_contacts(path="../staticfiles/contacts.csv"):
             PhoneNumberSerializer().create(validated_data=res)
         except:
             print(res)
+
+
+def create_departments(path="../staticfiles/departments.csv"):
+    df = pd.read_csv(path, encoding="windows-1251", sep=';')
+    for index, row in df.iterrows():
+        res = {
+             "department_name": df["DepartmentName"][index],
+            "web_site": df["webSite"][index],
+        }
+        # print(res)
+        # todo save res in DB
+        try:
+            DepartmentSerializer().create(validated_data=res)
+        except:
+            print(res)
+
 
 if __name__ == '__main__':
     # USERS_TO_CREATE = 100
@@ -108,5 +125,6 @@ if __name__ == '__main__':
     #     data = generator.get_new_json()
     #     user_manager.create(data)
     # print("Finished")
-    create_contacts()
+    # create_contacts()
     # create_student_organizations()
+    create_departments()

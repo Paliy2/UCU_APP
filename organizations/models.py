@@ -14,9 +14,14 @@ class Organization(models.Model):
     media = models.CharField(max_length=1000, blank=False)
     status = models.CharField(max_length=100, blank=False)
 
+    class Meta:
+        db_table = "organizations"
+
+
+class Department(models.Model):
+    id = models.AutoField(primary_key=True, db_index=True, unique=True, editable=False)
+    department_name = models.CharField(max_length=100, blank=False, unique=True)
+    web_site = models.CharField(max_length=1000, blank=False, unique=True)
 
     class Meta:
-        '''
-        to set table name in database
-        '''
-        db_table = "organizations"
+        db_table = "departments"

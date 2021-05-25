@@ -5,8 +5,8 @@ from django.shortcuts import get_object_or_404
 from django.views.generic import DetailView
 from rest_framework.generics import CreateAPIView, ListAPIView
 
-from organizations.models import Organization
-from organizations.serializers import OrganizationSerializer
+from organizations.models import Organization, Department
+from organizations.serializers import OrganizationSerializer, DepartmentSerializer
 
 
 class OrganizationListView(ListAPIView):
@@ -37,3 +37,29 @@ class OrganizationListView(ListAPIView):
 
 class OrganizationDetailView(DetailView):
     model = Organization
+
+
+
+class DepartmentListView(ListAPIView):
+    model = Department
+    serializer_class = DepartmentSerializer
+    permission_classes = (AllowAny,)
+
+    def get_queryset(self, **kwargs):
+        return Department.objects.all()
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        response = {
+            'success': 'True',
+            'status code': status.HTTP_200_OK,
+            'message': 'Event POST success',
+        }
+        status_code = status.HTTP_200_OK
+
+        return Response(response, status=status_code)
+
+class DepartmentDetailView(DetailView):
+    model = Department
