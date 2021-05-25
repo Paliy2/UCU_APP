@@ -81,14 +81,14 @@ WSGI_APPLICATION = 'UCU_APP.wsgi.application'
 DATABASES = {
 'default': {
     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    'NAME': 'TestDatabase',
-    'HOST': 'localhost',
-    'PORT': '',
-    'USER': 'postgres',
-    'PASSWORD': 'password',
+    'NAME': 'd3qo5pujdpe2ab',
+    'HOST': 'ec2-54-160-96-70.compute-1.amazonaws.com',
+    'PORT': '5432',
+    'USER': 'uvgecxiohblsoe',
+    'PASSWORD': 'bc2e28e6f03ad86bf6e17115d4f855075be61a78c81b25364e5eb75ce336a63a',
     }
 }
-
+DATABASE_URL = "postgres://uvgecxiohblsoe:bc2e28e6f03ad86bf6e17115d4f855075be61a78c81b25364e5eb75ce336a63a@ec2-54-160-96-70.compute-1.amazonaws.com:5432/d3qo5pujdpe2ab"
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
 
