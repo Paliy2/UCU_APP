@@ -4,12 +4,19 @@ from rest_framework import serializers
 
 
 class EventSerializer(serializers.ModelSerializer):
+    # category = StringArrayField()
+    category = serializers.SerializerMethodField('get_category')
+
+    def get_category(self, obj):
+        if obj:
+            print(obj.category)
+            return obj.category.split(',')
+        return ''
+
     class Meta:
         model = Event
-        fields = ('id',  'image', 'name', 'description', 'created_by', 'lecturer',
-                  'category', 'location', 'event_datetime', 'created_at',
-                  'is_online', 'event_online_meeting_link',
-                  )
+
+        fields = '__all__'
 
 
 class EventFavoritesSerializer(serializers.ModelSerializer):
