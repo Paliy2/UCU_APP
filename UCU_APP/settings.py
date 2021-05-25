@@ -2,10 +2,14 @@ import os
 from datetime import timedelta
 from pathlib import Path
 import django_heroku
+import dj_database_url
+import dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+dotenv_file = os.path.join(BASE_DIR, ".env")
+if os.path.isfile(dotenv_file):
+    dotenv.load_dotenv(dotenv_file)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -17,7 +21,6 @@ SECRET_KEY = 'wo988%&jz9prn1)0_!df5@qv(vrovf$owluz_ic2q2rpwgj))y'
 DEBUG = True
 
 ALLOWED_HOSTS = ['ancient-eyrie-54870', 'localhost', "floating-reef-52720", "floating-reef-52720.herokuapp.com"]
-
 
 # Application definition
 
@@ -44,6 +47,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'UCU_APP.urls'
@@ -67,17 +71,28 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'UCU_APP.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+'default': {
+    'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    'NAME': 'TestDatabase',
+    'HOST': 'localhost',
+    'PORT': '',
+    'USER': 'postgres',
+    'PASSWORD': 'password',
     }
 }
 
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -99,10 +114,10 @@ AUTH_PASSWORD_VALIDATORS = [
 
 AUTH_USER_MODEL = 'user.User'
 REST_FRAMEWORK = {
-     'DEFAULT_PERMISSION_CLASSES': [
-         'rest_framework.permissions.IsAuthenticated',
-         'rest_framework.permissions.IsAdminUser',
-         ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.IsAdminUser',
+    ],
     # 'DEFAULT_AUTHENTICATION_CLASSES': (
     #  'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     #  ),
@@ -153,7 +168,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
@@ -164,8 +178,9 @@ if not DEBUG:
 #     os.path.join(BASE_DIR,'staticfiles/')
 # ]
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
-# ancient-eyrie-54870
+options = DATABASES['default'].get('OPTIONS', {})
+options.pop('sslmode', None)
