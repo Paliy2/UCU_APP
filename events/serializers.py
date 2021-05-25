@@ -6,7 +6,7 @@ from rest_framework import serializers
 class EventSerializer(serializers.ModelSerializer):
     class Meta:
         model = Event
-        fields = ('id',  'picture_url', 'name', 'description', 'created_by', 'lecturer',
+        fields = ('id',  'picture', 'name', 'description', 'created_by', 'lecturer',
                   'category', 'location', 'event_datetime', 'created_at',
                   'is_online', 'event_online_meeting_link',
                   )

@@ -2,8 +2,19 @@
 # -*- coding: utf-8 -*-
 
 import uuid
+
+from django.core.validators import validate_comma_separated_integer_list
 from django.db import models
 from user.models import User
+from django import forms
+
+
+class Choice(models.Model):
+    categories = ((1, "Sociology"),
+                  (2, "Programming"),
+                  (3, "Lifeworks"),
+                  )
+    choice = models.CharField(choices=categories, max_length=150, unique=True)
 
 
 class Event(models.Model):
@@ -14,11 +25,6 @@ class Event(models.Model):
         ('p', 'Published'),
         ('w', 'Withdrawn'),
     ]
-
-    categories = ((1, "Sociology"),
-                  (2, "Programming"),
-                  (3, "Lifeworks"),
-                  )
 
     location_choices = (('c', "Sheptytsky Center"),
                         ('k', "Kozelnytska 2a"),
@@ -31,15 +37,18 @@ class Event(models.Model):
     # id = models.AutoField(null=True)
     status = models.CharField(max_length=1, default='d', choices=STATUS_CHOICES)
 
-    picture_url = models.URLField()
+    picture = models.ImageField(blank=True, upload_to="media/")
     name = models.CharField(max_length=100, blank=False)
     description = models.TextField()
     # todo user model created by FK
     created_by = models.CharField(max_length=200, blank=False)
     lecturer = models.CharField(max_length=200)
 
-    category = models.IntegerField(choices=categories)
-    location = models.CharField(max_length=300, choices=location_choices)
+    # category = models.IntegerField(choices=categories)
+    # category = models.CharField(validators=[validate_comma_separated_integer_list], max_length=255, default='1', blank=True)
+    category = models.CharField(max_length=255, default='1', blank=True)
+    # location = models.CharField(max_length=300, choices=location_choices)
+    location = models.CharField(max_length=3000, blank=True)
     event_datetime = models.DateTimeField()
     created_at = models.DateTimeField(auto_now_add=True)
     is_online = models.BooleanField(default=False)
