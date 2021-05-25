@@ -46,7 +46,7 @@ class Event(models.Model):
 
     # category = models.IntegerField(choices=categories)
     # category = models.CharField(validators=[validate_comma_separated_integer_list], max_length=255, default='1', blank=True)
-    category = models.CharField(max_length=255, default='1', blank=True)
+    category = models.CharField(max_length=2505, default='1', blank=True)
     # location = models.CharField(max_length=300, choices=location_choices)
     location = models.CharField(max_length=3000, blank=True)
     event_datetime = models.DateTimeField()

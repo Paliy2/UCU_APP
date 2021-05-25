@@ -18,12 +18,9 @@ class CommaSeparatedSelectInteger(forms.MultipleChoiceField):
             raise ValidationError(
                 self.error_messages['invalid_list'], code='invalid_list'
             )
-        return ','.join([str(val) for val in value])
+        return ','.join(value) #    ,'.join([str(val) for val in value])
 
     def validate(self, value):
-        """
-        Validates that the input is a string of integers separeted by comma.
-        """
         if self.required and not value:
             raise ValidationError(
                 self.error_messages['required'], code='required'
@@ -31,6 +28,8 @@ class CommaSeparatedSelectInteger(forms.MultipleChoiceField):
 
         # Validate that each value in the value list is in self.choices.
         for val in value.split(','):
+            print(val)
+            print(self.valid_value(val))
             if not self.valid_value(val):
                 raise ValidationError(
                     self.error_messages['invalid_choice'],
@@ -40,6 +39,8 @@ class CommaSeparatedSelectInteger(forms.MultipleChoiceField):
 
     def prepare_value(self, value):
         """ Convert the string of comma separated integers in list"""
+        if value:
+            value = value.split(',')
         return value
 
 
@@ -55,12 +56,11 @@ class CategoryForm(forms.ModelForm):
                   ('3', "Lifeworks"),
                   )
 
-    # category = forms.MultipleChoiceField(
-    #     widget=forms.CheckboxSelectMultiple, choices=CATEGORIES)
-
+    CATEGORIES = (('Sociology', "Sociology"),
+                  ('Programming', "Programming"),
+                  ('Lifeworks', "Lifeworks"),
+                  )
     category = CommaSeparatedSelectInteger(widget=forms.CheckboxSelectMultiple, choices=CATEGORIES)
-
-    # picture = forms.ImageField(widget=PictureWidget)
 
     def save(self, commit=True):
         instance = super(CategoryForm, self).save(commit=False)
@@ -71,7 +71,7 @@ class CategoryForm(forms.ModelForm):
     def clean_category(self):
         field = ""
         for data in self.cleaned_data['category']:
-            field += str(data) + ","
+            field += str(data)
         return field.strip(",")
 
 
