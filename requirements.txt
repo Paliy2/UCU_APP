@@ -15,7 +15,6 @@ openpyxl==3.0.6
 packaging==20.8
 pandocfilters==1.4.3
 pyyaml
-django_filters
 python-dotenv
 uritemplate
 gears

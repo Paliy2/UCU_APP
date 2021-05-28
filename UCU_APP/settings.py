@@ -37,7 +37,6 @@ INSTALLED_APPS = [
     'profile.apps.ApiConfig',
     'rest_framework',
     'phone_field',
-    'django_filters',
 ]
 
 MIDDLEWARE = [
@@ -119,7 +118,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
         'rest_framework.permissions.IsAdminUser',
     ],
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     # 'DEFAULT_AUTHENTICATION_CLASSES': (
     #  'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
     #  ),
