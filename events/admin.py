@@ -1,16 +1,25 @@
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Layout
 from django.contrib import admin
 from django.core.exceptions import ValidationError
+from django.forms import TextInput
 from django.utils.safestring import mark_safe
-
 from events.models import Event
 from django import forms
 from string import Template
+from crispy_forms.bootstrap import InlineCheckboxes
 
 
 def make_published(modeladmin, request, queryset):
     queryset.update(status='p')
 
+
 class CommaSeparatedSelectInteger(forms.MultipleChoiceField):
+    class Media:
+        css = {
+            "all": ("pretty.css")
+        }
+
     def to_python(self, value):
         if not value:
             return ''
@@ -18,7 +27,7 @@ class CommaSeparatedSelectInteger(forms.MultipleChoiceField):
             raise ValidationError(
                 self.error_messages['invalid_list'], code='invalid_list'
             )
-        return ','.join(value) #    ,'.join([str(val) for val in value])
+        return ','.join(value)  # ,'.join([str(val) for val in value])
 
     def validate(self, value):
         if self.required and not value:
@@ -44,23 +53,30 @@ class CommaSeparatedSelectInteger(forms.MultipleChoiceField):
         return value
 
 
-class PictureWidget(forms.widgets.Widget):
-    def render(self, name, value, attrs=None, **kwargs):
-        html = Template("""<img src="$link"/>""")
-        return mark_safe(html.substitute(link=value))
-
-
 class CategoryForm(forms.ModelForm):
-    CATEGORIES = (('1', "Sociology"),
-                  ('2', "Programming"),
-                  ('3', "Lifeworks"),
-                  )
+    # class Meta:
+    #     widgets = {
+    #         'category': TextInput(attrs={
+    #             'class': "category",
+    #             'style': "display: inline-block; width: 25%;"
+    #         })
+    #     }
 
-    CATEGORIES = (('Sociology', "Sociology"),
-                  ('Programming', "Programming"),
-                  ('Lifeworks', "Lifeworks"),
-                  )
+    with open("staticfiles/categories.txt", 'r', encoding="utf-8") as f:
+        data = f.read().split("\n")
+    CATEGORIES = []
+    for categ in data:
+        CATEGORIES.append([categ.title(), categ.title()])
+    print(CATEGORIES)
     category = CommaSeparatedSelectInteger(widget=forms.CheckboxSelectMultiple, choices=CATEGORIES)
+
+    # InlineCheckboxes("category")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            InlineCheckboxes("category"))
 
     def save(self, commit=True):
         instance = super(CategoryForm, self).save(commit=False)
@@ -81,3 +97,10 @@ class ArticleAdmin(admin.ModelAdmin):
     ordering = ['name']
     actions = [make_published]
     form = CategoryForm
+
+    class Media:
+        import os
+        print(os.listdir())
+        css = {
+            "all": ("pretty.css")
+        }

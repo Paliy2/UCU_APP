@@ -64,6 +64,8 @@ class RandomUserAccountGenerator:
 
 def create_student_organizations(path="../staticfiles/SO_UCU2.csv"):
     df = pd.read_csv(path, encoding="windows-1251", sep=';')
+    print(df[""])
+    input()
     for index, row in df.iterrows():
         res = {
             "organization_name": df["Organization"][index],
@@ -83,6 +85,10 @@ def create_student_organizations(path="../staticfiles/SO_UCU2.csv"):
 
 def create_contacts(path="../staticfiles/contacts.csv"):
     df = pd.read_csv(path, encoding="utf-8", sep=',')
+    # print(len(df["department"].unique()))
+    # print(sorted(list(set(df["department"].tolist()))))
+    # input()
+
     for index, row in df.iterrows():
         res = {
             "emailucu": df["emailucu"][index],
@@ -127,4 +133,4 @@ if __name__ == '__main__':
     # print("Finished")
     # create_contacts()
     # create_student_organizations()
-    create_departments()
+    # create_departments()

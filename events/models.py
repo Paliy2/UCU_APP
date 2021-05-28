@@ -2,12 +2,17 @@
 # -*- coding: utf-8 -*-
 
 import uuid
+from datetime import datetime, timedelta
 
 from django.core.validators import validate_comma_separated_integer_list
 from django.db import models
 from user.models import User
 from django import forms
 
+
+def default_start_time():
+    now = datetime.now()
+    return now + timedelta(hours=1)
 
 class Choice(models.Model):
     categories = ((1, "Sociology"),
@@ -55,9 +60,7 @@ class Event(models.Model):
     event_online_meeting_link = models.CharField(max_length=600, blank=True)
 
     class Meta:
-        '''
-        to set table name in database
-        '''
+        ordering = ("event_datetime", )
         db_table = "events"
 
 
