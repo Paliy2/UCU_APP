@@ -1,0 +1,4 @@
+#id_category > li {
+    display: inline-block;
+    width: 25%;
+}

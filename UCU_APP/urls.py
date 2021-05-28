@@ -1,10 +1,12 @@
 from django.conf.urls import url, include
 from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import path
 from django.contrib import admin
 from django.views.generic import TemplateView
 from rest_framework.schemas import get_schema_view
 from django.conf import settings
+from django.views.static import serve
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -28,5 +30,6 @@ urlpatterns = [
     path('api/', include('events.urls')),
     path('api/', include('profile.urls')),
     path('api/', include('organizations.urls')),
-
-]  + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    url(r'^media/(?P<path>.*)$', serve, {'document_root': settings.MEDIA_ROOT}),
+    url(r'^static/(?P<path>.*)$', serve, {'document_root': settings.STATIC_ROOT}),
+]
