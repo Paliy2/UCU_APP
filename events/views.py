@@ -7,8 +7,6 @@ from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters
 from events.models import Event
 from events.models import EventFavorites
 from events.serializers import EventSerializer
