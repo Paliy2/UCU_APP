@@ -1,3 +1,5 @@
+from datetime import date
+
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
@@ -5,12 +7,12 @@ from rest_framework.views import APIView
 from rest_framework.generics import CreateAPIView, ListAPIView
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
-
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import filters
 from events.models import Event
 from events.models import EventFavorites
 from events.serializers import EventSerializer
 from events.serializers import EventFavoritesSerializer
-
 
 class EventRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     model = Event
@@ -19,6 +21,7 @@ class EventRetrieveUpdateDestroyAPIView(RetrieveUpdateDestroyAPIView):
     permission_classes = (AllowAny,)
 
     # lookup_field = 'id'
+    # filters = (filters.SearchFilter, )
 
     def get(self, request, id, *args, **kwargs):
         try:
@@ -58,6 +61,12 @@ class EventListView(ListAPIView):
     queryset = Event.objects.all()
     serializer_class = EventSerializer
     permission_classes = (AllowAny,)
+    # filter_backends = (filters.SearchFilter,)
+    # search_fields = ['event_datetime    ', ]
+    # print(date.today())
+
+    # bigger than todat
+    queryset = queryset.filter(created_at__gte=date.today())
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)

@@ -9,7 +9,6 @@ class EventSerializer(serializers.ModelSerializer):
 
     def get_category(self, obj):
         if obj:
-            print(obj.category)
             return obj.category.split(',')
         return ''
 

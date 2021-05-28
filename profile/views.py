@@ -10,7 +10,6 @@ from profile.serializers import PhoneNumberSerializer
 from rest_framework import filters
 from user.serializers import UserSerializer
 
-
 class PhoneNumberListView(ListAPIView):
     paginate_by = 3
     model = PhoneNumber
