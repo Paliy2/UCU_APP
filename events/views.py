@@ -64,7 +64,7 @@ class EventListView(ListAPIView):
     # print(date.today())
 
     # bigger than todat
-    queryset = queryset.filter(created_at__gte=date.today())
+    queryset = queryset.filter(event_datetime__gte=date.today())
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
