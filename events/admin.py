@@ -43,6 +43,7 @@ class CommaSeparatedSelectInteger(forms.MultipleChoiceField):
 class CategoryForm(forms.ModelForm):
     with open("staticfiles/categories.txt", 'r', encoding="utf-8") as f:
         data = f.read().split("\n")
+    # data = ""
     CATEGORIES = []
     for categ in sorted(data):
         CATEGORIES.append([categ.title(), categ.title()])

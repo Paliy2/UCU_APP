@@ -108,6 +108,7 @@ def create_contacts(path="../staticfiles/contacts.csv"):
 
 
 def create_departments(path="../staticfiles/departments.csv"):
+    # Department.objects.all().delete()
     df = pd.read_csv(path, encoding="windows-1251", sep=';')
     for index, row in df.iterrows():
         res = {
@@ -133,4 +134,4 @@ if __name__ == '__main__':
     # print("Finished")
     # create_contacts()
     # create_student_organizations()
-    # create_departments()
+    create_departments()
