@@ -43,6 +43,7 @@ class Event(models.Model):
     status = models.CharField(max_length=1, default='d', choices=STATUS_CHOICES)
 
     image = models.ImageField(blank=True, upload_to="media/")
+    image_url = models.URLField(blank=True)
     name = models.CharField(max_length=100, blank=False)
     description = models.TextField()
     # todo user model created by FK
