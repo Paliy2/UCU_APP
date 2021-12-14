@@ -1,1 +1,5 @@
 '.env' 
+staticfiles/rest_framework/contacts.csv
+.idea
+temp
+.env
